@@ -1,11 +1,22 @@
-import React from 'react';
+import { useState } from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Navigation from './components/Navigation';
+import AppRouter from './routes';
 
-const App: React.FC = () => {
+export default function App() {
+  const [darkMode, setDarkMode] = useState(false);
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+    document.documentElement.classList.toggle('dark');
+  };
+
   return (
-    <div className="flex justify-center items-center h-screen bg-blue-500">
-      <h1 className="text-4xl font-bold text-white">Hello, Tailwind CSS!</h1>
-    </div>
+    <Router>
+      <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
+        <Navigation darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+        <AppRouter darkMode={darkMode} />
+      </div>
+    </Router>
   );
-};
-
-export default App;
+}
