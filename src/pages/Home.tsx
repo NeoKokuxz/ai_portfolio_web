@@ -1,11 +1,16 @@
-import React from 'react';
+import { useAtom } from 'jotai';
 import { useNavigate } from 'react-router-dom';
+import { darkModeWithPersistAtom } from '../store/atoms';
 
-interface HomePageProps {
+type FeatureCardProps = {
+  icon: string;
+  title: string;
+  description: string;
   darkMode: boolean;
-}
+};
 
-const HomePage: React.FC<HomePageProps> = ({ darkMode }) => {
+export default function HomePage() {
+  const [darkMode] = useAtom(darkModeWithPersistAtom);
   const navigate = useNavigate();
 
   return (
@@ -140,12 +145,15 @@ const HomePage: React.FC<HomePageProps> = ({ darkMode }) => {
           darkMode ? 'text-white' : 'text-gray-900'
         }`}
       >
-        <div className={`text-center`}>
-          <h2 className={`text-3xl font-bold mb-12`}>
+        <div className="text-center">
+          <h2
+            className={`text-3xl font-bold mb-12 ${
+              darkMode ? 'text-white' : 'text-gray-900'
+            }`}
+          >
             Trusted by developers worldwide
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 opacity-50">
-            {/* Add company logos here */}
             <div className="h-12 flex items-center justify-center">
               Company 1
             </div>
@@ -163,19 +171,9 @@ const HomePage: React.FC<HomePageProps> = ({ darkMode }) => {
       </div>
     </div>
   );
-};
+}
 
-function FeatureCard({
-  icon,
-  title,
-  description,
-  darkMode,
-}: {
-  icon: string;
-  title: string;
-  description: string;
-  darkMode: boolean;
-}) {
+function FeatureCard({ icon, title, description, darkMode }: FeatureCardProps) {
   return (
     <div
       className={`p-6 rounded-xl ${
@@ -196,5 +194,3 @@ function FeatureCard({
     </div>
   );
 }
-
-export default HomePage;

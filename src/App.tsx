@@ -1,21 +1,17 @@
-import { useState } from 'react';
+import { useAtom } from 'jotai';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import AppRouter from './routes';
+import { darkModeWithPersistAtom } from './store/atoms';
 
 export default function App() {
-  const [darkMode, setDarkMode] = useState(false);
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-    document.documentElement.classList.toggle('dark');
-  };
+  const [darkMode] = useAtom(darkModeWithPersistAtom);
 
   return (
     <Router>
       <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
-        <Navigation darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
-        <AppRouter darkMode={darkMode} />
+        <Navigation />
+        <AppRouter />
       </div>
     </Router>
   );
